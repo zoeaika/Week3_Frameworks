@@ -1,0 +1,23 @@
+Review 1:
+  Text: I love my new Kindle Paperwhite! The display is amazing and battery lasts weeks.
+  Brands: []
+  Products: ['Kindle Paperwhite']
+  Sentiment: positive
+
+Review 2:
+  Text: Sony headphones were terrible. Broke after 2 days of use. Never buying Sony again.
+  Brands: ['Sony', 'Sony']
+  Products: []
+  Sentiment: negative
+
+Review 3:
+  Text: Apple's iPhone 15 camera is not good for low-light photos. Disappointing for such an expensive device.
+  Brands: ['Apple']
+  Products: ['iPhone 15']
+  Sentiment: negative
+
+Review 4:
+  Text: This Dyson vacuum cleaner is the best purchase I've made. It's not cheap but worth every penny.
+  Brands: ['Dyson']
+  Products: []
+  Sentiment: positive

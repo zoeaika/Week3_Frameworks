@@ -1,0 +1,15 @@
+Original Buggy Code
+model = tf.keras.Sequential([
+    tf.keras.layers.Flatten(input_shape=(28, 28)),
+    tf.keras.layers.Dense(128, activation='relu'),
+    tf.keras.layers.Dense(10, activation='softmax')
+])
+
+model.compile(optimizer='adam',
+              loss='categorical_crossentropy',  # Bug 1
+              metrics=['accuracy'])
+
+model.fit(train_images, train_labels, 
+          epochs=10, 
+          batch_size=32,
+          validation_data=(test_images, test_labels))  # Bug 2

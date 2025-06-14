@@ -1,0 +1,26 @@
+# 1. Add proper input reshaping
+train_images = train_images.reshape((60000, 28, 28, 1))
+test_images = test_images.reshape((10000, 28, 28, 1))
+
+# 2. Correct model architecture
+model = tf.keras.Sequential([
+    tf.keras.layers.Conv2D(32, (3,3), activation='relu', input_shape=(28,28,1)),  # Added conv layer
+    tf.keras.layers.MaxPooling2D((2,2)),
+    tf.keras.layers.Flatten(),  # Moved flatten after conv
+    tf.keras.layers.Dense(128, activation='relu'),
+    tf.keras.layers.Dense(10, activation='softmax')
+])
+
+# 3. Fix loss function and label preprocessing
+train_labels = tf.keras.utils.to_categorical(train_labels)  # Convert to one-hot
+test_labels = tf.keras.utils.to_categorical(test_labels)
+
+model.compile(optimizer='adam',
+              loss='categorical_crossentropy',  # Now matches one-hot labels
+              metrics=['accuracy'])
+
+# 4. Fix validation data usage
+model.fit(train_images, train_labels,
+          epochs=10,
+          batch_size=32,
+          validation_split=0.2)  # Use proper validation split

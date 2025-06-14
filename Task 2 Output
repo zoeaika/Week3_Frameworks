@@ -1,0 +1,9 @@
+Epoch 1/10
+750/750 [==============================] - 20s 26ms/step - loss: 0.2190 - accuracy: 0.9333 - val_loss: 0.0767 - val_accuracy: 0.9762
+Epoch 2/10
+750/750 [==============================] - 19s 25ms/step - loss: 0.0648 - accuracy: 0.9801 - val_loss: 0.0548 - val_accuracy: 0.9843
+...
+Epoch 10/10
+750/750 [==============================] - 19s 25ms/step - loss: 0.0113 - accuracy: 0.9964 - val_loss: 0.0504 - val_accuracy: 0.9882
+
+Test accuracy: 0.9912

@@ -1,0 +1,74 @@
+import spacy
+from collections import defaultdict
+
+# Load spaCy English model
+nlp = spacy.load("en_core_web_sm")
+
+# Define sentiment lexicons and rules
+POSITIVE_WORDS = {"good", "great", "excellent", "awesome", "love", "like", 
+                  "best", "wonderful", "amazing", "fantastic", "recommend"}
+NEGATIVE_WORDS = {"bad", "terrible", "awful", "poor", "hate", "dislike", 
+                  "worst", "boring", "waste", "disappointing", "broken"}
+NEGATION_WORDS = {"not", "n't", "never", "no", "without"}
+
+def analyze_sentiment(doc):
+    """Rule-based sentiment analysis with negation handling"""
+    sentiment_score = 0
+    tokens = [token.text.lower() for token in doc]
+    
+    for i, token in enumerate(doc):
+        if token.text.lower() in POSITIVE_WORDS:
+            # Check for negation in previous 3 words
+            if any(t in NEGATION_WORDS for t in tokens[max(0, i-3):i]):
+                sentiment_score -= 1
+            else:
+                sentiment_score += 1
+                
+        elif token.text.lower() in NEGATIVE_WORDS:
+            # Check for negation in previous 3 words
+            if any(t in NEGATION_WORDS for t in tokens[max(0, i-3):i]):
+                sentiment_score += 1
+            else:
+                sentiment_score -= 1
+                
+    return "positive" if sentiment_score > 0 else "negative" if sentiment_score < 0 else "neutral"
+
+def process_reviews(reviews):
+    """Process reviews to extract entities and analyze sentiment"""
+    results = []
+    for review in reviews:
+        doc = nlp(review)
+        
+        # Extract brands (ORG) and products (PRODUCT)
+        entities = defaultdict(list)
+        for ent in doc.ents:
+            if ent.label_ in ["ORG", "PRODUCT"]:
+                entities[ent.label_].append(ent.text)
+        
+        # Analyze sentiment
+        sentiment = analyze_sentiment(doc)
+        
+        results.append({
+            "review": review,
+            "brands": entities["ORG"],
+            "products": entities["PRODUCT"],
+            "sentiment": sentiment
+        })
+    return results
+
+# Sample Amazon product reviews
+reviews = [
+    "I love my new Kindle Paperwhite! The display is amazing and battery lasts weeks.",
+    "Sony headphones were terrible. Broke after 2 days of use. Never buying Sony again.",
+    "Apple's iPhone 15 camera is not good for low-light photos. Disappointing for such an expensive device.",
+    "This Dyson vacuum cleaner is the best purchase I've made. It's not cheap but worth every penny."
+]
+
+# Process reviews and show results
+results = process_reviews(reviews)
+for i, res in enumerate(results, 1):
+    print(f"Review {i}:")
+    print(f"  Text: {res['review']}")
+    print(f"  Brands: {res['brands']}")
+    print(f"  Products: {res['products']}")
+    print(f"  Sentiment: {res['sentiment']}\n")

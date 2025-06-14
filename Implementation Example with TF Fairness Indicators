@@ -1,0 +1,11 @@
+# Add to MNIST training pipeline
+from tensorflow_model_analysis.addons.fairness.view import widget_view
+from tensorflow_model_analysis.addons.fairness.metrics import fairness_indicators
+
+fairness_metrics = fairness_indicators(
+    thresholds=[0.5], 
+    labels_key='subgroup'  # Add demographic metadata
+)
+
+model = tf.keras.Sequential([...])
+model.compile(metrics=fairness_metrics)

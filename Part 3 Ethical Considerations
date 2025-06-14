@@ -1,0 +1,16 @@
+1. Ethical Considerations
+Potential Biases & Mitigation Strategies:
+
+Model	Potential Biases	Mitigation Tools
+MNIST Classifier	- Cultural bias in digit writing styles
+- Age bias (elderly/child handwriting)
+- Accessibility bias (amputee writing)	TensorFlow Fairness Indicators
+1. Analyze performance by demographic subgroups
+2. Apply adversarial debiasing during training
+3. Implement min-diff loss for fairness constraints
+Amazon Reviews NER	- Brand name recognition favors Western companies
+- Product bias against local/artisanal items
+- Sentiment lexicon cultural differences	spaCy Rule-based Systems
+1. Add custom patterns for underrepresented brands
+2. Create culture-specific sentiment rules
+3. Implement context-aware entity
